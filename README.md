@@ -17,5 +17,5 @@ Implementation
 Installation
 ------------
 
-- Simply use `pip install hlda` to install the package.
+- Simply use `pip install hlda` to install the package. Or from this repo use: `pip install git+https://github.com/jreades/hlda.git`
 - An example notebook that infers the hierarchical topics on the BBC Insight corpus can be found in [notebooks/bbc_test.ipynb](notebooks/bbc_test.ipynb).
