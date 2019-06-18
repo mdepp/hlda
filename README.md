@@ -1,3 +1,5 @@
+*Note*: I will maintain this version as best I can until the original `hlda` library is updated for Python3.
+
 Hierarchical Latent Dirichlet Allocation
 ----------------------------------------
 
@@ -17,5 +19,5 @@ Implementation
 Installation
 ------------
 
-- Simply use `pip install hlda` to install the package. Or from this repo use: `pip install git+https://github.com/jreades/hlda.git`
+- To get the version from *this* repo use: `pip install git+https://github.com/jreades/hlda.git` (using `pip install hlda` will give you the original version that hasn't been updated for Python3).
 - An example notebook that infers the hierarchical topics on the BBC Insight corpus can be found in [notebooks/bbc_test.ipynb](notebooks/bbc_test.ipynb).
