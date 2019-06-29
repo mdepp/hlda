@@ -391,9 +391,10 @@ class HierarchicalLDA(object):
         out = '    ' * indent
         out += 'topic=%d level=%d (documents=%d): ' % (node.node_id, node.level, node.customers)
         out += node.get_top_words(n_words, with_weights)
+        outs = [out]
         for child in node.children:
-            out += self.print_node(child, indent+1, n_words, with_weights)
-        return out
+            outs.append(self.print_node(child, indent+1, n_words, with_weights))
+        return '\n'.join(outs)
 
 def load_vocab(file_name):
     with open(file_name, 'rb') as f:
