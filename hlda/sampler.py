@@ -187,12 +187,14 @@ class HierarchicalLDA(object):
                 random_node.total_words += 1
                 self.levels[d][n] = random_level
 
-    def estimate(self, num_samples, display_topics=50, n_words=5, with_weights=True):
+    def estimate(self, num_samples, display_topics=50, n_words=5, with_weights=True, iter_callback=None,
+                 print_callback=None):
 
-        print('HierarchicalLDA sampling\n')
+        if print_callback is None:
+            print_callback = print
+
+        print_callback('HierarchicalLDA sampling\n')
         for s in range(num_samples):
-
-            sys.stdout.write('.')
 
             for d in range(len(self.corpus)):
                 self.sample_path(d)
@@ -200,10 +202,12 @@ class HierarchicalLDA(object):
             for d in range(len(self.corpus)):
                 self.sample_topics(d)
 
+            if iter_callback is not None:
+                iter_callback()
+
             if (s > 0) and ((s+1) % display_topics == 0):
-                print("{0}".format(s+1))
-                self.print_nodes(n_words, with_weights)
-                print("")
+                print_callback("{0}".format(s+1))
+                print_callback(self.print_nodes(n_words, with_weights))
 
     def sample_path(self, d):
 
@@ -381,15 +385,15 @@ class HierarchicalLDA(object):
             node.total_words += 1
 
     def print_nodes(self, n_words, with_weights):
-        self.print_node(self.root_node, 0, n_words, with_weights)
+        return self.print_node(self.root_node, 0, n_words, with_weights)
 
     def print_node(self, node, indent, n_words, with_weights):
         out = '    ' * indent
         out += 'topic=%d level=%d (documents=%d): ' % (node.node_id, node.level, node.customers)
         out += node.get_top_words(n_words, with_weights)
-        print(out)
         for child in node.children:
-            self.print_node(child, indent+1, n_words, with_weights)
+            out += self.print_node(child, indent+1, n_words, with_weights)
+        return out
 
 def load_vocab(file_name):
     with open(file_name, 'rb') as f:
